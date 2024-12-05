@@ -48,7 +48,6 @@ func Distances(list1, list2 []int) int {
 		}
 	}
 
-	fmt.Println(distance)
 	return distance
 }
 
