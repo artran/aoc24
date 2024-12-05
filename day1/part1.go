@@ -18,7 +18,12 @@ func Distances(list1, list2 []int) int {
 	distance := 0
 
 	for idx, val1 := range list1 {
-		distance += list2[idx] - val1
+		val2 := list2[idx]
+		if val1 >= val2 {
+			distance += val1 - val2
+		} else {
+			distance += val2 - val1
+		}
 	}
 
 	fmt.Println(distance)
