@@ -11,7 +11,7 @@ import (
 )
 
 func main() {
-	file, err := os.Open("part1_input.txt")
+	file, err := os.Open("input.txt")
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -30,7 +30,29 @@ func main() {
 
 	list1, list2 := SplitInput(lines)
 
-	fmt.Printf("Total distance: %d", Distances(list1, list2))
+	// 	fmt.Printf("Total distance: %d", Distances(list1, list2))
+	fmt.Printf("Similarity: %d", Similarity(list1, list2))
+}
+
+func Similarity(list1, list2 []int) int {
+	gathered := gatherTerms(list2)
+	total := 0
+
+	for _, val := range list1 {
+		total += val * gathered[val]
+	}
+
+	return total
+}
+
+func gatherTerms(lst []int) map[int]int {
+	ret := make(map[int]int, 0)
+
+	for _, key := range lst {
+		ret[key] += 1
+	}
+
+	return ret
 }
 
 func Distances(list1, list2 []int) int {
