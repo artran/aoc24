@@ -1,4 +1,4 @@
-package day1
+package main
 
 import (
 	"fmt"
@@ -6,6 +6,10 @@ import (
 	"strconv"
 	"strings"
 )
+
+func main() {
+	fmt.Println("Hello")
+}
 
 func Distances(list1, list2 []int) int {
 	slices.Sort(list1)
