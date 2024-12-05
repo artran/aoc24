@@ -1,14 +1,36 @@
 package main
 
 import (
+	"bufio"
 	"fmt"
+	"log"
+	"os"
 	"slices"
 	"strconv"
 	"strings"
 )
 
 func main() {
-	fmt.Println("Hello")
+	file, err := os.Open("part1_input.txt")
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer file.Close()
+
+	var lines []string
+
+	scanner := bufio.NewScanner(file)
+	for scanner.Scan() {
+		lines = append(lines, scanner.Text())
+	}
+
+	if err := scanner.Err(); err != nil {
+		log.Fatal(err)
+	}
+
+	list1, list2 := SplitInput(lines)
+
+	fmt.Printf("Total distance: %d", Distances(list1, list2))
 }
 
 func Distances(list1, list2 []int) int {
