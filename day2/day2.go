@@ -38,20 +38,11 @@ func main() {
 }
 
 func Stability(line string) bool {
-	split := strings.Split(line, " ")
-
-	prev, err := strconv.Atoi(split[0])
-	if err != nil {
-		panic(err)
-	}
+	nums := stringToNums(line)
+	prev := nums[0]
 
 	direction := 0 // 1 -> increasing, -1 -> decreasing, 0 -> not set yet
-	for _, nextStr := range split[1:] {
-		next, err := strconv.Atoi(nextStr)
-		if err != nil {
-			panic(err)
-		}
-
+	for _, next := range nums[1:] {
 		diff := 0
 		if next > prev {
 			if direction == -1 {
@@ -75,4 +66,19 @@ func Stability(line string) bool {
 	}
 
 	return true
+}
+
+func stringToNums(line string) []int {
+	split := strings.Split(line, " ")
+	nums := make([]int, len(split))
+	var err error
+
+	for i, s := range split {
+		nums[i], err = strconv.Atoi(s)
+		if err != nil {
+			panic(err)
+		}
+	}
+
+	return nums
 }
