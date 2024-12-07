@@ -81,11 +81,12 @@ func searchWord2d(grid [][]byte, row, col int, word string) int {
 				break
 			}
 
+			// If we get here we matched the current character so count it
+			k += 1
+
 			// Move in specific direction
 			currX += x[dir]
 			currY += y[dir]
-			// Select next charcter of target word
-			k += 1
 		}
 
 		// If all characters matched, then value of k must be equal to length of word
