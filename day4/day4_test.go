@@ -17,7 +17,7 @@ func TestWordSearch(t *testing.T) {
 	}
 	expected := 18
 
-	found := SearchWord(data)
+	found := SearchWord(data, "XMAS")
 
 	if found != expected {
 		t.Errorf("Found %d, expected %d", found, expected)
