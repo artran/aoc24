@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"slices"
 	"strconv"
 	"strings"
 )
@@ -40,7 +41,22 @@ func main() {
 func Stability(line string) bool {
 	reports := stringToReports(line)
 
-	return stabilityOfReports(reports)
+	// First try the unchanged reports
+	if stabilityOfReports(reports) {
+		return true
+	}
+
+	// If that failed try removing each element in turn
+	for idx := 0; idx < len(reports); idx++ {
+		copied := slices.Clone(reports)
+		copied = slices.Delete(copied, idx, idx+1)
+		s := stabilityOfReports(copied)
+		if s {
+			return true
+		}
+	}
+
+	return false
 }
 
 func stringToReports(line string) []int {

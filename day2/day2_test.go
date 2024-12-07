@@ -13,8 +13,8 @@ func TestStability(t *testing.T) {
 		"8 6 4 4 1",
 		"1 3 6 7 9",
 	}
-	// expected := []bool{true, false, false, true, true, true} // day2
-	expected := []bool{true, false, false, false, false, true} // day1
+	expected := []bool{true, false, false, true, true, true} // day2
+	// expected := []bool{true, false, false, false, false, true} // day1
 
 	for idx, line := range data {
 		stability := Stability(line)
