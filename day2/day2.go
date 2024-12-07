@@ -38,11 +38,31 @@ func main() {
 }
 
 func Stability(line string) bool {
-	nums := stringToNums(line)
-	prev := nums[0]
+	reports := stringToReports(line)
+
+	return stabilityOfReports(reports)
+}
+
+func stringToReports(line string) []int {
+	split := strings.Split(line, " ")
+	reports := make([]int, len(split))
+	var err error
+
+	for i, s := range split {
+		reports[i], err = strconv.Atoi(s)
+		if err != nil {
+			panic(err)
+		}
+	}
+
+	return reports
+}
+
+func stabilityOfReports(reports []int) bool {
+	prev := reports[0]
 
 	direction := 0 // 1 -> increasing, -1 -> decreasing, 0 -> not set yet
-	for _, next := range nums[1:] {
+	for _, next := range reports[1:] {
 		diff := 0
 		if next > prev {
 			if direction == -1 {
@@ -66,19 +86,4 @@ func Stability(line string) bool {
 	}
 
 	return true
-}
-
-func stringToNums(line string) []int {
-	split := strings.Split(line, " ")
-	nums := make([]int, len(split))
-	var err error
-
-	for i, s := range split {
-		nums[i], err = strconv.Atoi(s)
-		if err != nil {
-			panic(err)
-		}
-	}
-
-	return nums
 }
