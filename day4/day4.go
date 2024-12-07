@@ -2,6 +2,7 @@ package main
 
 import (
 	"bufio"
+	"fmt"
 	"log"
 	"os"
 )
@@ -13,18 +14,20 @@ func main() {
 	}
 	defer file.Close()
 
-	var lines [][]byte
+	var grid [][]byte
 
 	scanner := bufio.NewScanner(file)
 	for scanner.Scan() {
-		lines = append(lines, scanner.Bytes())
+		grid = append(grid, scanner.Bytes())
 	}
 
 	if err := scanner.Err(); err != nil {
 		log.Fatal(err)
 	}
 
-	// fmt.Printf("Total: %d", stabiltyCount)
+	wordsFound := SearchWord(grid, "XMAS")
+
+	fmt.Printf("Total: %d\n", wordsFound)
 }
 
 // https://www.geeksforgeeks.org/search-a-word-in-a-2d-grid-of-characters/
