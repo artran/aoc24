@@ -7,6 +7,7 @@ import (
 	"os"
 	"regexp"
 	"strconv"
+	"strings"
 )
 
 func main() {
@@ -27,20 +28,31 @@ func main() {
 		log.Fatal(err)
 	}
 
-	total := 0
-	for _, line := range lines {
-		total += DeCorrupt(line)
-	}
+	total := DeCorrupt(strings.Join(lines, ""))
 
 	fmt.Printf("Total: %d", total)
 }
 
 func DeCorrupt(data string) int {
-	re := regexp.MustCompile(`mul\((\d{1,3}),(\d{1,3})\)`)
+	re := regexp.MustCompile(`mul\((\d{1,3}),(\d{1,3})\)|don't\(\)|do\(\)`)
 	found := re.FindAllStringSubmatch(data, -1)
 
+	enabled := true
 	total := 0
 	for _, match := range found {
+		if match[0] == "don't()" {
+			enabled = false
+			continue
+		}
+		if match[0] == "do()" {
+			enabled = true
+			continue
+		}
+
+		// Add to the total only if calculation is enabled
+		if !enabled {
+			continue
+		}
 		lhs, _ := strconv.Atoi(match[1])
 		rhs, _ := strconv.Atoi(match[2])
 		total += lhs * rhs
