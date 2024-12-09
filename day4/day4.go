@@ -7,18 +7,6 @@ import (
 	"os"
 )
 
-var (
-	xBound, yBound int
-	word           = "XMAS"
-	lenWord        = len(word)
-)
-
-// x and y are used to set the direction in which word needs to be searched.
-var (
-	x = []int{-1, -1, -1, 0, 0, 1, 1, 1}
-	y = []int{-1, 0, 1, -1, 1, -1, 0, 1}
-)
-
 func main() {
 	file, err := os.Open("input.txt")
 	if err != nil {
@@ -37,17 +25,18 @@ func main() {
 		log.Fatal(err)
 	}
 
-	xBound = len(grid)
-	yBound = len(grid[0])
-	wordsFound := SearchWord(grid)
+	wordsFound := SearchWord(grid, "XMAS")
 
 	fmt.Printf("Total: %d\n", wordsFound)
 }
 
-func SearchWord(grid [][]byte) int {
+func SearchWord(grid [][]byte, word string) int {
+	m := len(grid)
+	n := len(grid[0])
+
 	ans := 0
-	for i := 0; i < xBound; i++ {
-		for j := 0; j < yBound; j++ {
+	for i := 0; i < m; i++ {
+		for j := 0; j < n; j++ {
 			// add the number of matches from this coordinate
 			ans += searchWord2d(grid, i, j, word)
 		}
@@ -63,6 +52,17 @@ func searchWord2d(grid [][]byte, row, col int, word string) int {
 		return 0
 	}
 
+	// m and n set the upper bounds for the grid
+	m := len(grid)
+	n := len(grid[0])
+
+	// x and y are used to set the direction in which word needs to be searched.
+	x := []int{-1, -1, -1, 0, 0, 1, 1, 1}
+	y := []int{-1, 0, 1, -1, 1, -1, 0, 1}
+
+	// small optimisation
+	lenWord := len(word)
+
 	// This loop will search in all the 8 directions one by one.
 	found := 0
 	for dir := 0; dir < 8; dir++ {
@@ -72,7 +72,7 @@ func searchWord2d(grid [][]byte, row, col int, word string) int {
 
 		for k < lenWord {
 			// break if out of bounds
-			if currX >= xBound || currX < 0 || currY >= yBound || currY < 0 {
+			if currX >= m || currX < 0 || currY >= n || currY < 0 {
 				break
 			}
 
