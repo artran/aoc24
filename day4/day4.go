@@ -67,26 +67,27 @@ func searchWord2d(grid [][]byte, row, col int, word string) int {
 	found := 0
 	for dir := 0; dir < 8; dir++ {
 		// Initialize starting point for current direction
-		currX, currY := row+x[dir], col+y[dir]
+		currY, currX := row+y[dir], col+x[dir]
 		k := 1
 
 		for k < lenWord {
 			// break if out of bounds
-			if currX >= m || currX < 0 || currY >= n || currY < 0 {
+			if currY >= m || currY < 0 || currX >= n || currX < 0 {
 				break
 			}
 
 			// break if character doesn't match expected
-			if grid[currX][currY] != word[k] {
+			if grid[currY][currX] != word[k] {
 				break
 			}
 
 			// If we get here we matched the current character so count it
+			// fmt.Printf("Found %c at %d, %d\n", word[k], currY, currX)
 			k += 1
 
 			// Move in specific direction
-			currX += x[dir]
 			currY += y[dir]
+			currX += x[dir]
 		}
 
 		// If all characters matched, then value of k must be equal to length of word
