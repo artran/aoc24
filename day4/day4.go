@@ -13,13 +13,9 @@ func main() {
 		log.Fatal(err)
 	}
 	defer file.Close()
-
-	var grid [][]byte
-
 	scanner := bufio.NewScanner(file)
-	for scanner.Scan() {
-		grid = append(grid, scanner.Bytes())
-	}
+
+	var grid [][]byte = ReadFile(scanner)
 
 	if err := scanner.Err(); err != nil {
 		log.Fatal(err)
@@ -28,6 +24,16 @@ func main() {
 	wordsFound := SearchWord(grid, "XMAS")
 
 	fmt.Printf("Total: %d\n", wordsFound)
+}
+
+func ReadFile(scanner *bufio.Scanner) [][]byte {
+	var grid [][]byte
+	scanner.Split(bufio.ScanLines)
+	for scanner.Scan() {
+		str := scanner.Text()
+		grid = append(grid, []byte(str))
+	}
+	return grid
 }
 
 func SearchWord(grid [][]byte, word string) int {
