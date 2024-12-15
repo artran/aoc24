@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 from collections import defaultdict
+from functools import cmp_to_key
 from typing import TextIO
 
 
@@ -40,11 +41,22 @@ def extract_updates(input: TextIO) -> list[list[int]]:
 
 def process_updates(updates: list[list[int]], rules: dict[tuple[int, int], bool]) -> int:
     total = 0
+    resorted_total = 0
+
+    def _cmp_to_key(x: int, y: int) -> int:
+        return -1 if rules[x, y] else 1
 
     for update in updates:
-        total += _process_update(update, rules)
+        value = _process_update(update, rules)
+        if value > 0:
+            total += value
+        else:
+            resorted = sorted(update, key=cmp_to_key(_cmp_to_key))
+            resorted_total += _process_update(resorted, rules)
 
+    print(f'resorted: {resorted_total}')
     return total
+
 
 def _process_update(update: list[int], rules: dict[tuple[int, int], bool]) -> int:
     for i, x in enumerate(update):
