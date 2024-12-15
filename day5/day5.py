@@ -4,15 +4,6 @@ from collections import defaultdict
 from typing import List, TextIO
 
 
-def main(input: TextIO):
-    score = 0
-
-    rule_definitions = extract_rule_definitions(input)
-    rules = convert_defs_to_rules(rule_definitions)
-
-    print(score)
-
-
 def extract_rule_definitions(input: TextIO) -> list[tuple[int, int]]:
     rules = []
 
@@ -66,4 +57,13 @@ def _process_update(update: list[int], rules: dict[tuple[int, int], bool]) -> in
 
 if __name__ == '__main__':
     with open('input.txt') as input:
-        main(input)
+        score = 0
+
+        defs = extract_rule_definitions(input)
+        input.seek(0)
+        rules = convert_defs_to_rules(defs)
+        updates = extract_updates(input)
+
+    result = process_updates(updates, rules)
+
+    print(result)
