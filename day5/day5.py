@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 from collections import defaultdict
-from typing import List, TextIO
+from typing import TextIO
 
 
 def extract_rule_definitions(input: TextIO) -> list[tuple[int, int]]:

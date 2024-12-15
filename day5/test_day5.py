@@ -1,5 +1,3 @@
-import pytest
-
 from day5.day5 import (convert_defs_to_rules, extract_rule_definitions,
                        extract_updates, process_updates)
 
