@@ -47,6 +47,23 @@ def extract_updates(input: TextIO) -> list[list[int]]:
     return list(updates)
 
 
+def process_updates(updates: list[list[int]], rules: dict[tuple[int, int], bool]) -> int:
+    total = 0
+
+    for update in updates:
+        total += _process_update(update, rules)
+
+    return total
+
+def _process_update(update: list[int], rules: dict[tuple[int, int], bool]) -> int:
+    for i, x in enumerate(update):
+        for y in update[i:]:
+            if not rules[(x, y)]:
+                return 0
+    
+    mid_idx = len(update) // 2
+    return update[mid_idx]
+
 if __name__ == '__main__':
     with open('input.txt') as input:
         main(input)

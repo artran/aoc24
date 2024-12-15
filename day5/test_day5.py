@@ -1,7 +1,7 @@
 import pytest
 
 from day5.day5 import (convert_defs_to_rules, extract_rule_definitions,
-                       extract_updates)
+                       extract_updates, process_updates)
 
 
 def test_ordering_rules_length():
@@ -53,3 +53,15 @@ def test_updates_types():
     for update in updates:
         for page in update:
             assert type(page) == int
+
+
+def test_updates():
+    with open('test.txt') as input:
+        defs = extract_rule_definitions(input)
+        input.seek(0)
+        rules = convert_defs_to_rules(defs)
+        updates = extract_updates(input)
+
+    result = process_updates(updates, rules)
+
+    assert result == 143
