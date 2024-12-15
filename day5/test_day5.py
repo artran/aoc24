@@ -1,6 +1,7 @@
 import pytest
 
-from day5.day5 import convert_defs_to_rules, extract_rule_definitions
+from day5.day5 import (convert_defs_to_rules, extract_rule_definitions,
+                       extract_updates)
 
 
 def test_ordering_rules_length():
@@ -9,6 +10,7 @@ def test_ordering_rules_length():
 
     assert len(rules) == 21
 
+
 def test_rule_defs_type():
     with open('test.txt') as input:
         rules = extract_rule_definitions(input)
@@ -16,6 +18,7 @@ def test_rule_defs_type():
     for rule in rules:
         assert type(rule[0]) == int
         assert type(rule[1]) == int
+
 
 def test_rule_values():
     with open('test.txt') as input:
@@ -34,3 +37,19 @@ def test_rule_values():
 
     # Not mentioned ordering is allowed
     assert rules[(12, 29)] is True
+
+
+def test_updates_length():
+    with open('test.txt') as input:
+        updates = extract_updates(input)
+
+    assert len(updates) == 6
+
+
+def test_updates_types():
+    with open('test.txt') as input:
+        updates = extract_updates(input)
+
+    for update in updates:
+        for page in update:
+            assert type(page) == int
