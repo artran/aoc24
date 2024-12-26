@@ -24,6 +24,10 @@ fi
 
 mkdir "${day_folder}"
 touch "${day_folder}"/__init__.py
+touch "${day_folder}"/input.txt
+touch "${day_folder}"/test.txt
+touch "${day_folder}/${day_folder}".py
+touch "${day_folder}/test_${day_folder}".py
 
 echo "Folder ${day_folder} created"
 exit 0
